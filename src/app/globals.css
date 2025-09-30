@@ -66,3 +66,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-cyan-500 to-pink-500 bg-[size:200%_auto] animate-gradient-shift;
+  }
+}

@@ -15,7 +15,7 @@ export default function DailyQuoteCard({ quote }: DailyQuoteCardProps) {
     <Card className="w-full shadow-lg shadow-primary/10">
       <CardHeader>
         <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span className='font-headline text-primary'>Quote of the Day</span>
+            <span className='font-headline text-gradient'>Quote of the Day</span>
             <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>{format(new Date(quote.date), "MMMM d, yyyy")}</span>
