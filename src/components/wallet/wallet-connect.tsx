@@ -90,9 +90,9 @@ export default function WalletConnect() {
     )}>
       <span className="absolute inset-[-1000%] animate-rainbow-spin bg-[conic-gradient(from_90deg_at_50%_50%,#a855f7_0%,#06b6d4_50%,#ec4899_100%)]" />
       <div className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors",
+        "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors",
         "bg-background text-foreground hover:bg-background/80",
-        "h-9 px-4 py-2 gap-2"
+        "h-9 px-4 py-2 gap-2 rounded-md"
       )}>
         <KeyRound />
         Connect Wallet
