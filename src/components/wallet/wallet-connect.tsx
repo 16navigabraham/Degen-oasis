@@ -1,8 +1,9 @@
+
 'use client';
 
 import { useWallet } from '@/context/wallet-context';
 import { Button } from '@/components/ui/button';
-import { Copy, KeyRound, Loader2, LogIn, LogOut, Wallet } from 'lucide-react';
+import { Copy, KeyRound, Loader2, LogOut, Wallet } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,28 +54,25 @@ export default function WalletConnect() {
         <DropdownMenuContent align="end" className="w-64">
           <DropdownMenuLabel className='font-normal'>
             <div className='flex flex-col space-y-2'>
-                <div className='flex items-center gap-2'>
-                  <Avatar className='h-8 w-8'>
+                <div className='flex items-center gap-3'>
+                  <Avatar className='h-10 w-10'>
                       <AvatarFallback className='bg-primary/20 text-primary'>
-                          <Wallet className='h-4 w-4'/>
+                          <Wallet className='h-5 w-5'/>
                       </AvatarFallback>
                   </Avatar>
-                  <div>
+                  <div className='flex flex-col'>
                     <p className='text-sm font-medium leading-none'>Degen Wallet</p>
-                    <p className='text-xs leading-none text-muted-foreground'>Connected</p>
+                    <p className='text-xs leading-none text-muted-foreground mt-1'>{truncatedAddress}</p>
                   </div>
                 </div>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={copyToClipboard} className='gap-2'>
+          <DropdownMenuItem onClick={copyToClipboard} className='gap-2 cursor-pointer'>
             <Copy />
-            <div className='flex flex-col'>
-              <span className='text-xs text-muted-foreground'>Copy Address</span>
-              <span className='font-mono text-xs'>{truncatedAddress}</span>
-            </div>
+            <span>Copy Address</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={disconnectWallet} className='gap-2'>
+          <DropdownMenuItem onClick={disconnectWallet} className='gap-2 cursor-pointer text-red-500/80 hover:!text-red-500'>
             <LogOut/>
             <span>Disconnect</span>
           </DropdownMenuItem>
