@@ -43,6 +43,9 @@ export default function ReactionButtons({ quote }: ReactionButtonsProps) {
     }
 
     startTransition(async () => {
+      const oldOptimisticUserReaction = optimisticUserReaction;
+      const oldOptimisticReactions = optimisticReactions;
+
       setOptimisticReactions(currentReactions => {
         const newReactions = { ...currentReactions };
         // Decrement old reaction if exists
@@ -56,15 +59,21 @@ export default function ReactionButtons({ quote }: ReactionButtonsProps) {
       setOptimisticUserReaction(reaction);
 
       const result = await submitReactionAction(quote.id, reaction, walletAddress);
-      if (!result.success) {
+      
+      if (result.success) {
+        toast({
+          title: 'Reaction Recorded!',
+          description: 'Your reaction has been cast. Come back tomorrow!',
+        });
+      } else {
         toast({
             variant: 'destructive',
             title: 'Reaction failed',
             description: result.message,
         });
         // Revert optimistic update
-        setOptimisticReactions(quote.reactions);
-        setOptimisticUserReaction(getUserReactionForToday(walletAddress));
+        setOptimisticReactions(oldOptimisticReactions);
+        setOptimisticUserReaction(oldOptimisticUserReaction);
       }
     });
   };
