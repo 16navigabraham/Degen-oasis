@@ -10,7 +10,7 @@ import { CATEGORIES } from './types';
 const quoteSchema = z.object({
   quote: z.string().min(10, 'Quote must be at least 10 characters.').max(280, 'Quote must be 280 characters or less.'),
   author: z.string().max(50, 'Author name must be 50 characters or less.').optional().or(z.literal('')),
-  category: z.enum(CATEGORIES).optional(),
+  category: z.enum(CATEGORIES),
   walletAddress: z.string().startsWith('0x'),
 });
 

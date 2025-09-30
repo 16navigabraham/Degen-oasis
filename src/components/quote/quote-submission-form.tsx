@@ -14,10 +14,14 @@ import { useToast } from '@/hooks/use-toast';
 import { useWallet } from '@/context/wallet-context';
 import { FormState, submitQuote } from '@/lib/actions';
 import { Loader2, Send } from 'lucide-react';
+import { CATEGORIES, Category } from '@/lib/types';
+import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
+import CategoryTag from './category-tag';
 
 const quoteSchema = z.object({
   quote: z.string().min(10, 'Quote must be at least 10 characters.').max(280, 'Quote must be 280 characters or less.'),
   author: z.string().max(50, 'Author name must be 50 characters or less.').optional(),
+  category: z.enum(CATEGORIES, { required_error: 'Please select a category.' }),
 });
 
 type QuoteFormValues = z.infer<typeof quoteSchema>;
@@ -120,6 +124,34 @@ export default function QuoteSubmissionForm() {
                   <FormLabel>Author (Optional)</FormLabel>
                   <FormControl>
                     <Input placeholder="e.g., Satoshi Nakamoto" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Category</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="grid grid-cols-2 md:grid-cols-3 gap-2"
+                    >
+                      {CATEGORIES.map((category) => (
+                        <FormItem key={category} className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={category} id={category} className='sr-only' />
+                          </FormControl>
+                          <FormLabel htmlFor={category} className='w-full'>
+                            <CategoryTag category={category as Category} className='w-full justify-center cursor-pointer data-[state=checked]:ring-2 data-[state=checked]:ring-primary' />
+                          </FormLabel>
+                        </FormItem>
+                      ))}
+                    </RadioGroup>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
