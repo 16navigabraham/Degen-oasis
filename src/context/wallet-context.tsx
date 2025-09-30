@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface WalletContextType {
   walletAddress: string | null;
   isConnected: boolean;
+  isConnecting: boolean;
   connectWallet: () => void;
   disconnectWallet: () => void;
 }
@@ -13,13 +14,18 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [isConnecting, setIsConnecting] = useState(false);
 
   const connectWallet = () => {
+    setIsConnecting(true);
     // This is a simulation of a wallet connection.
-    const pseudoRandomAddress = `0x${[...Array(40)]
-      .map(() => Math.floor(Math.random() * 16).toString(16))
-      .join('')}`;
-    setWalletAddress(pseudoRandomAddress);
+    setTimeout(() => {
+      const pseudoRandomAddress = `0x${[...Array(40)]
+        .map(() => Math.floor(Math.random() * 16).toString(16))
+        .join('')}`;
+      setWalletAddress(pseudoRandomAddress);
+      setIsConnecting(false);
+    }, 1500);
   };
 
   const disconnectWallet = () => {
@@ -31,6 +37,7 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
       value={{
         walletAddress,
         isConnected: !!walletAddress,
+        isConnecting,
         connectWallet,
         disconnectWallet,
       }}
