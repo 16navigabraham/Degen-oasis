@@ -27,6 +27,15 @@ let quotes: Quote[] = [
 
 let userActions: UserActions = {};
 
+// Track total reactions for the leaderboard
+let reactionLeaderboard: Record<string, number> = {
+    "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t": 21,
+    "0x9f8e7d6c5b4a39281706f5e4d3c2b1a0f9e8d7c6": 15,
+    "0x11223344556677889900aabbccddeeff11223344": 12,
+    "0xabcdef1234567890abcdef1234567890abcdef12": 8,
+    "0x5a6b7c8d9e0f1a2b3c4d5e6f7g8h9i0j1k2l3m4n": 5,
+};
+
 const getTodayDateString = () => new Date().toISOString().split('T')[0];
 
 export const getTodaysQuote = (): Quote | undefined => {
@@ -74,6 +83,9 @@ export const addReaction = (quoteId: number, reaction: Reaction, walletAddress: 
   const oldReaction = quote.reactedWallets[walletAddress];
   if (oldReaction) {
     quote.reactions[oldReaction] = Math.max(0, quote.reactions[oldReaction] - 1);
+  } else {
+    // Only increment total reaction count if it's a new reaction, not a changed one.
+    reactionLeaderboard[walletAddress] = (reactionLeaderboard[walletAddress] || 0) + 1;
   }
 
   quote.reactions[reaction]++;
@@ -103,4 +115,15 @@ export const getUserReactionForToday = (walletAddress: string): Reaction | undef
   const today = getTodaysQuote();
   if (!today || !walletAddress) return undefined;
   return today.reactedWallets[walletAddress];
+}
+
+export const getLeaderboard = () => {
+    return Object.entries(reactionLeaderboard)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 5)
+        .map(([address, count], index) => ({
+            rank: index + 1,
+            address,
+            count,
+        }));
 }

@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { canSubmitQuote } from '@/lib/data';
 import { useEffect, useState } from 'react';
 import { Feather } from 'lucide-react';
+import ReactionLeaderboard from '@/components/quote/reaction-leaderboard';
 
 interface ClientPageProps {
   serverTodaysQuote: Quote | undefined;
@@ -61,6 +62,8 @@ export default function ClientPage({
         )}
 
         {serverTodaysQuote && <CountdownTimer />}
+
+        <ReactionLeaderboard />
 
         <QuoteHistory quotes={serverQuoteHistory} />
       </div>
