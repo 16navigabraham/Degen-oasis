@@ -85,14 +85,14 @@ export default function WalletConnect() {
 
   return (
     <Button onClick={connectWallet} className={cn(
-      "relative overflow-hidden p-[1px]",
-      "transition-all duration-300 ease-in-out bg-background hover:bg-opacity-80",
+      "relative overflow-hidden rounded-md p-[1px]",
+      "transition-all duration-300 ease-in-out bg-background hover:bg-opacity-80"
     )}>
       <span className="absolute inset-[-1000%] animate-rainbow-spin bg-[conic-gradient(from_90deg_at_50%_50%,#a855f7_0%,#06b6d4_50%,#ec4899_100%)]" />
       <div className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors",
+        "relative z-10 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors",
         "bg-background text-foreground hover:bg-background/80",
-        "h-9 px-4 py-2 gap-2 rounded-md"
+        "w-full h-full px-4 py-2 gap-2 rounded-[calc(var(--radius)-1px)]"
       )}>
         <KeyRound />
         Connect Wallet
