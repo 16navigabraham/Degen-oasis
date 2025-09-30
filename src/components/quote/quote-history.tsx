@@ -1,6 +1,7 @@
 import { Quote, EMOJI_REACTIONS } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { format, parseISO } from 'date-fns';
+import CategoryTag from './category-tag';
 
 interface QuoteHistoryProps {
   quotes: Quote[];
@@ -23,10 +24,11 @@ export default function QuoteHistory({ quotes }: QuoteHistoryProps) {
                 <div className='h-2 w-2 rounded-full bg-primary-foreground'></div>
             </div>
             <Card className="border-border">
-              <CardHeader className="pb-3">
+              <CardHeader className="pb-3 flex-row items-center justify-between">
                 <p className="text-sm text-muted-foreground">
                     {format(parseISO(quote.date), 'MMMM d, yyyy')}
                 </p>
+                {quote.category && <CategoryTag category={quote.category} />}
               </CardHeader>
               <CardContent>
                 <blockquote className="space-y-2">

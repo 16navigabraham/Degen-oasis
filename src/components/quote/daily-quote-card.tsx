@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import ReactionButtons from './reaction-buttons';
 import { Calendar } from 'lucide-react';
 import { format } from 'date-fns';
+import CategoryTag from './category-tag';
 
 interface DailyQuoteCardProps {
   quote: Quote;
@@ -25,6 +26,11 @@ export default function DailyQuoteCard({ quote }: DailyQuoteCardProps) {
         </CardHeader>
         <CardContent className="py-6">
           <blockquote className="text-center">
+            {quote.category && (
+                <div className='mb-4 flex justify-center'>
+                    <CategoryTag category={quote.category} />
+                </div>
+            )}
             <p className="font-headline text-2xl md:text-3xl font-medium text-foreground">
               “{quote.text}”
             </p>

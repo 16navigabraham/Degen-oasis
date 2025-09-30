@@ -4,11 +4,13 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { addQuote, addReaction, canSubmitQuote } from '@/lib/data';
 import { detectInappropriateQuote } from '@/ai/flows/detect-inappropriate-quote';
-import type { Reaction } from './types';
+import type { Reaction, Category } from './types';
+import { CATEGORIES } from './types';
 
 const quoteSchema = z.object({
   quote: z.string().min(10, 'Quote must be at least 10 characters.').max(280, 'Quote must be 280 characters or less.'),
   author: z.string().max(50, 'Author name must be 50 characters or less.').optional().or(z.literal('')),
+  category: z.enum(CATEGORIES).optional(),
   walletAddress: z.string().startsWith('0x'),
 });
 
@@ -22,6 +24,7 @@ export async function submitQuote(prevState: FormState, formData: FormData): Pro
   const validatedFields = quoteSchema.safeParse({
     quote: formData.get('quote'),
     author: formData.get('author'),
+    category: formData.get('category'),
     walletAddress: formData.get('walletAddress'),
   });
 
@@ -33,7 +36,7 @@ export async function submitQuote(prevState: FormState, formData: FormData): Pro
     };
   }
 
-  const { quote, author, walletAddress } = validatedFields.data;
+  const { quote, author, walletAddress, category } = validatedFields.data;
 
   if (!canSubmitQuote(walletAddress)) {
     return { message: 'You can only submit one quote per day.', type: 'error' };
@@ -50,7 +53,7 @@ export async function submitQuote(prevState: FormState, formData: FormData): Pro
   }
 
 
-  addQuote(quote, author || null, walletAddress);
+  addQuote(quote, author || null, walletAddress, category);
   revalidatePath('/');
 
   return { message: 'Your wisdom has been submitted.', type: 'success' };

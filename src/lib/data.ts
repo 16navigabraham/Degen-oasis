@@ -2,7 +2,7 @@
  * In a real-world application, this would be a database like Firestore or a PostgreSQL database.
  * For this demo, we are using in-memory objects that reset on server restart.
  */
-import type { Quote, UserActions, Reaction } from './types';
+import type { Quote, UserActions, Reaction, Category } from './types';
 
 let quotes: Quote[] = [
     {
@@ -10,6 +10,7 @@ let quotes: Quote[] = [
         text: 'The greatest risk is not taking one.',
         author: 'Satoshi Nakamoto',
         date: '2024-07-18',
+        category: 'Market Wisdom',
         reactions: { '🔥': 42, '🚀': 1337, '💎': 69, '🌕': 88 },
         reactedWallets: {},
     },
@@ -18,6 +19,7 @@ let quotes: Quote[] = [
         text: 'To the moon!',
         author: 'Every Degen Ever',
         date: '2024-07-17',
+        category: 'Degen',
         reactions: { '🔥': 12, '🚀': 50, '💎': 5, '🌕': 200 },
         reactedWallets: {},
     }
@@ -37,7 +39,7 @@ export const getQuoteHistory = (): Quote[] => {
   return quotes.filter(q => q.date !== today).sort((a, b) => b.id - a.id);
 };
 
-export const addQuote = (text: string, author: string | null, walletAddress: string): Quote => {
+export const addQuote = (text: string, author: string | null, walletAddress: string, category?: Category): Quote => {
   const today = getTodayDateString();
   
   const newQuote: Quote = {
@@ -45,6 +47,7 @@ export const addQuote = (text: string, author: string | null, walletAddress: str
     text,
     author,
     date: today,
+    category,
     reactions: { '🔥': 0, '🚀': 0, '💎': 0, '🌕': 0 },
     reactedWallets: {},
   };
