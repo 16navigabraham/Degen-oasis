@@ -3,6 +3,7 @@ import './globals.css';
 import { WalletProvider } from '@/context/wallet-context';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
+import { ThemeProvider } from '@/components/providers/theme-provider';
 
 export const metadata: Metadata = {
   title: 'Degen Oasis',
@@ -15,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -25,10 +26,17 @@ export default function RootLayout({
           "font-body antialiased",
           "bg-gradient-to-br from-gray-900 via-purple-900/50 to-blue-900/30",
         )}>
-        <WalletProvider>
-          {children}
-          <Toaster />
-        </WalletProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <WalletProvider>
+            {children}
+            <Toaster />
+          </WalletProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
