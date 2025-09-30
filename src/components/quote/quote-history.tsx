@@ -1,8 +1,10 @@
-import { Quote, EMOJI_REACTIONS } from '@/lib/types';
+import { Quote } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { format, parseISO } from 'date-fns';
 import CategoryTag from './category-tag';
-import { History } from 'lucide-react';
+import { History, MoreHorizontal } from 'lucide-react';
+import { QuoteDetailModal } from './quote-detail-modal';
+import { Button } from '../ui/button';
 
 interface QuoteHistoryProps {
   quotes: Quote[];
@@ -30,30 +32,29 @@ export default function QuoteHistory({ quotes }: QuoteHistoryProps) {
             <div className="absolute left-4 top-4 z-10 -translate-x-1/2 rounded-full bg-primary p-1.5">
                 <div className='h-2 w-2 rounded-full bg-primary-foreground'></div>
             </div>
-            <Card className="border-border transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10">
-              <CardHeader className="pb-3 flex-row items-center justify-between">
-                <p className="text-sm text-muted-foreground">
-                    {format(parseISO(quote.date), 'MMMM d, yyyy')}
-                </p>
-                {quote.category && <CategoryTag category={quote.category} />}
-              </CardHeader>
-              <CardContent>
-                <blockquote className="space-y-2">
-                  <p className="text-foreground">“{quote.text}”</p>
-                  {quote.author && (
-                    <footer className="text-sm text-muted-foreground">— {quote.author}</footer>
-                  )}
-                </blockquote>
-              </CardContent>
-              <CardFooter className="flex items-center gap-4 pt-4">
-                {EMOJI_REACTIONS.map(emoji => (
-                    <div key={emoji} className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <span>{emoji}</span>
-                        <span className='font-mono tabular-nums'>{quote.reactions[emoji]}</span>
-                    </div>
-                ))}
-              </CardFooter>
-            </Card>
+            <QuoteDetailModal quote={quote}>
+              <Card className="border-border transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 cursor-pointer">
+                <CardHeader className="pb-3 flex-row items-start justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">
+                        {format(parseISO(quote.date), 'MMMM d, yyyy')}
+                    </p>
+                    {quote.category && <CategoryTag category={quote.category} className='mt-2' />}
+                  </div>
+                  <Button variant='ghost' size='icon' className='h-8 w-8 -my-2 -mr-2 text-muted-foreground hover:text-foreground'>
+                    <MoreHorizontal className='h-5 w-5' />
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <blockquote className="space-y-2">
+                    <p className="text-foreground line-clamp-3">“{quote.text}”</p>
+                    {quote.author && (
+                      <footer className="text-sm text-muted-foreground">— {quote.author}</footer>
+                    )}
+                  </blockquote>
+                </CardContent>
+              </Card>
+            </QuoteDetailModal>
           </div>
         ))}
       </div>
