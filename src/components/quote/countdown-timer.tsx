@@ -20,7 +20,7 @@ export default function CountdownTimer() {
   }, []);
 
   return (
-    <Card className="bg-transparent border-primary/20">
+    <Card className="bg-transparent border-primary/20 backdrop-blur-none">
       <CardContent className="p-4">
         <div className="flex flex-col items-center justify-center gap-2 text-center">
             <div className='flex items-center gap-2 text-sm text-muted-foreground'>
