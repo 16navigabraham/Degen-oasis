@@ -12,31 +12,33 @@ interface DailyQuoteCardProps {
 
 export default function DailyQuoteCard({ quote }: DailyQuoteCardProps) {
   return (
-    <Card className="w-full shadow-lg shadow-primary/10">
-      <CardHeader>
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <span className='font-headline text-gradient'>Quote of the Day</span>
-            <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{format(new Date(quote.date), "MMMM d, yyyy")}</span>
-            </div>
-        </div>
-      </CardHeader>
-      <CardContent className="py-6">
-        <blockquote className="text-center">
-          <p className="font-headline text-2xl md:text-3xl font-medium text-foreground">
-            “{quote.text}”
-          </p>
-          {quote.author && (
-            <footer className="mt-4 text-base text-muted-foreground">
-              — {quote.author}
-            </footer>
-          )}
-        </blockquote>
-      </CardContent>
-      <CardFooter>
-        <ReactionButtons quote={quote} />
-      </CardFooter>
-    </Card>
+    <div className="[perspective:1000px]">
+      <Card className="w-full shadow-lg shadow-primary/10 transition-all duration-300 hover:[transform:rotateX(5deg)_rotateY(-5deg)] hover:shadow-2xl hover:shadow-primary/20">
+        <CardHeader>
+          <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <span className='font-headline text-gradient'>Quote of the Day</span>
+              <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>{format(new Date(quote.date), "MMMM d, yyyy")}</span>
+              </div>
+          </div>
+        </CardHeader>
+        <CardContent className="py-6">
+          <blockquote className="text-center">
+            <p className="font-headline text-2xl md:text-3xl font-medium text-foreground">
+              “{quote.text}”
+            </p>
+            {quote.author && (
+              <footer className="mt-4 text-base text-muted-foreground">
+                — {quote.author}
+              </footer>
+            )}
+          </blockquote>
+        </CardContent>
+        <CardFooter>
+          <ReactionButtons quote={quote} />
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
