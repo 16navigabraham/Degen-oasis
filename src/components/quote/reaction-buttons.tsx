@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { submitReactionAction } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 import { getUserReactionForToday } from '@/lib/data';
+import { useSound } from '@/context/sound-context';
 
 interface ReactionButtonsProps {
   quote: Quote;
@@ -16,6 +17,7 @@ interface ReactionButtonsProps {
 export default function ReactionButtons({ quote }: ReactionButtonsProps) {
   const { walletAddress, isConnected } = useWallet();
   const { toast } = useToast();
+  const { playSound } = useSound();
   const [isPending, startTransition] = useTransition();
   const [optimisticReactions, setOptimisticReactions] = useState(quote.reactions);
   const [optimisticUserReaction, setOptimisticUserReaction] = useState<Reaction | undefined>(undefined);
@@ -39,8 +41,11 @@ export default function ReactionButtons({ quote }: ReactionButtonsProps) {
         title: 'Wallet not connected',
         description: 'Please connect your wallet to react.',
       });
+      playSound('error');
       return;
     }
+
+    playSound('reaction');
 
     startTransition(async () => {
       const oldOptimisticUserReaction = optimisticUserReaction;
@@ -71,6 +76,7 @@ export default function ReactionButtons({ quote }: ReactionButtonsProps) {
             title: 'Reaction failed',
             description: result.message,
         });
+        playSound('error');
         // Revert optimistic update
         setOptimisticReactions(oldOptimisticReactions);
         setOptimisticUserReaction(oldOptimisticUserReaction);

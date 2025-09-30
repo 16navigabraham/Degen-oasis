@@ -1,6 +1,7 @@
 import Logo from "@/components/ui/logo";
 import WalletConnect from "@/components/wallet/wallet-connect";
 import { ThemeToggle } from "./theme-toggle";
+import SoundToggle from "./sound-toggle";
 
 export default function Header() {
   return (
@@ -8,6 +9,7 @@ export default function Header() {
       <div className="container flex h-14 max-w-screen-2xl items-center justify-between">
         <Logo />
         <div className="flex items-center gap-2">
+          <SoundToggle />
           <ThemeToggle />
           <WalletConnect />
         </div>

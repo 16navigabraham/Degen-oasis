@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { useSound } from './sound-context';
 
 interface WalletContextType {
   walletAddress: string | null;
@@ -15,6 +16,7 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 export const WalletProvider = ({ children }: { children: ReactNode }) => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
+  const { playSound } = useSound();
 
   const connectWallet = () => {
     setIsConnecting(true);
@@ -25,11 +27,13 @@ export const WalletProvider = ({ children }: { children: ReactNode }) => {
         .join('')}`;
       setWalletAddress(pseudoRandomAddress);
       setIsConnecting(false);
+      playSound('connect');
     }, 1500);
   };
 
   const disconnectWallet = () => {
     setWalletAddress(null);
+    playSound('disconnect');
   };
 
   return (

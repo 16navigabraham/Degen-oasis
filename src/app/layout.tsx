@@ -4,6 +4,7 @@ import { WalletProvider } from '@/context/wallet-context';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers/theme-provider';
+import { SoundProvider } from '@/context/sound-context';
 
 export const metadata: Metadata = {
   title: 'Degen Oasis',
@@ -32,10 +33,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <WalletProvider>
-            {children}
-            <Toaster />
-          </WalletProvider>
+          <SoundProvider>
+            <WalletProvider>
+              {children}
+              <Toaster />
+            </WalletProvider>
+          </SoundProvider>
         </ThemeProvider>
       </body>
     </html>
