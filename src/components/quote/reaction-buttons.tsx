@@ -81,7 +81,7 @@ export default function ReactionButtons({ quote }: ReactionButtonsProps) {
             variant="outline"
             size="lg"
             className={cn(
-              'group relative overflow-hidden rounded-full transition-all duration-300 ease-out hover:border-primary hover:shadow-lg hover:shadow-primary/20',
+              'group relative overflow-hidden rounded-full transition-all duration-300 ease-out hover:scale-110 hover:border-primary hover:shadow-lg hover:shadow-primary/20 active:scale-95',
               hasReactedWithThis && 'border-primary bg-primary/10 text-primary',
               isPending && 'opacity-50 cursor-not-allowed'
             )}
@@ -90,7 +90,7 @@ export default function ReactionButtons({ quote }: ReactionButtonsProps) {
             aria-pressed={hasReactedWithThis}
           >
             <div className="flex items-center gap-2">
-              <span className="text-xl transition-transform duration-300 group-hover:scale-125">{emoji}</span>
+              <span className="text-xl transition-transform duration-300 group-hover:scale-125 group-hover:rotate-[-8deg]">{emoji}</span>
               <span className="font-mono text-sm font-medium tabular-nums">{count}</span>
             </div>
           </Button>
