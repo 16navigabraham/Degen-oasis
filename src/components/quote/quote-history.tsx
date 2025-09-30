@@ -24,13 +24,13 @@ export default function QuoteHistory({ quotes }: QuoteHistoryProps) {
       <h2 className="text-center font-headline text-2xl font-bold text-primary">
         Wisdom of Ages Past
       </h2>
-      <div className="relative space-y-4 after:absolute after:inset-y-0 after:left-4 after:w-0.5 after:bg-border">
-        {quotes.map((quote) => (
-          <div key={quote.id} className="relative pl-10">
+      <div className="relative space-y-4 after:absolute after:inset-y-0 after:left-4 after:w-0.5 after:bg-border after:animate-in after:fade-in after:duration-1000">
+        {quotes.map((quote, index) => (
+          <div key={quote.id} className="relative pl-10 animate-in fade-in slide-in-from-left-4 duration-500" style={{ animationDelay: `${index * 100}ms`}}>
             <div className="absolute left-4 top-4 z-10 -translate-x-1/2 rounded-full bg-primary p-1.5">
                 <div className='h-2 w-2 rounded-full bg-primary-foreground'></div>
             </div>
-            <Card className="border-border">
+            <Card className="border-border transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10">
               <CardHeader className="pb-3 flex-row items-center justify-between">
                 <p className="text-sm text-muted-foreground">
                     {format(parseISO(quote.date), 'MMMM d, yyyy')}
@@ -45,7 +45,7 @@ export default function QuoteHistory({ quotes }: QuoteHistoryProps) {
                   )}
                 </blockquote>
               </CardContent>
-              <CardFooter className="flex items-center gap-4">
+              <CardFooter className="flex items-center gap-4 pt-4">
                 {EMOJI_REACTIONS.map(emoji => (
                     <div key={emoji} className="flex items-center gap-1.5 text-sm text-muted-foreground">
                         <span>{emoji}</span>
