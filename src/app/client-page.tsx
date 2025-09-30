@@ -6,9 +6,10 @@ import QuoteSubmissionForm from '@/components/quote/quote-submission-form';
 import DailyQuoteCard from '@/components/quote/daily-quote-card';
 import QuoteHistory from '@/components/quote/quote-history';
 import CountdownTimer from '@/components/quote/countdown-timer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { canSubmitQuote } from '@/lib/data';
 import { useEffect, useState } from 'react';
+import { Feather } from 'lucide-react';
 
 interface ClientPageProps {
   serverTodaysQuote: Quote | undefined;
@@ -45,13 +46,16 @@ export default function ClientPage({
           <QuoteSubmissionForm />
         ) : (
           <Card className="bg-card/50 border-dashed">
-            <CardHeader>
-              <CardTitle className="font-headline text-center text-primary">Awaiting Today's Wisdom</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-center text-muted-foreground">
-                {isConnected ? "A new quote can be submitted for today." : "Connect your wallet to submit today's quote."}
-              </p>
+            <CardContent className="p-8 flex flex-col items-center justify-center text-center gap-4">
+              <div className="p-4 bg-primary/10 rounded-full border border-primary/20">
+                <Feather className="h-12 w-12 text-primary" strokeWidth={1.5} />
+              </div>
+              <div className='space-y-1'>
+                <h3 className='font-headline text-xl text-primary'>Awaiting Today's Wisdom</h3>
+                <p className="text-center text-muted-foreground">
+                  {isConnected ? "Be the first to share a quote for today." : "Connect your wallet to submit today's quote."}
+                </p>
+              </div>
             </CardContent>
           </Card>
         )}

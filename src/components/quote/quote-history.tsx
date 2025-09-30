@@ -2,6 +2,7 @@ import { Quote, EMOJI_REACTIONS } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { format, parseISO } from 'date-fns';
 import CategoryTag from './category-tag';
+import { History } from 'lucide-react';
 
 interface QuoteHistoryProps {
   quotes: Quote[];
@@ -9,7 +10,13 @@ interface QuoteHistoryProps {
 
 export default function QuoteHistory({ quotes }: QuoteHistoryProps) {
   if (quotes.length === 0) {
-    return null;
+    return (
+      <div className="text-center py-10 px-4 border border-dashed rounded-lg border-border">
+        <History className="mx-auto h-10 w-10 text-muted-foreground mb-3" strokeWidth={1.5} />
+        <h3 className="font-headline text-lg text-muted-foreground">No History Yet</h3>
+        <p className="text-sm text-muted-foreground/80">Quotes from previous days will appear here.</p>
+      </div>
+    );
   }
 
   return (
