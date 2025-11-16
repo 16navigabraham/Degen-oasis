@@ -39,7 +39,7 @@ export default function ReactionButtons({ quote }: ReactionButtonsProps) {
       toast({
         variant: 'destructive',
         title: 'Wallet not connected',
-        description: 'Please connect your wallet to react.',
+        description: 'Please connect your wallet first to react.',
       });
       playSound('error');
       return;
