@@ -8,7 +8,7 @@ import { SoundProvider } from '@/context/sound-context';
 
 export const metadata: Metadata = {
   title: 'Degen Oasis',
-  description: 'Daily quotes for the discerning degen.',
+  description: 'Curated daily quotes for crypto enthusiasts.',
 };
 
 export default function RootLayout({
